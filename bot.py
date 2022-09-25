@@ -1,15 +1,15 @@
-import telegram
-import config
+import requests
 
-def main():
-    bot = telegram.Bot(config.telegram_token)
-    for update in bot.get_updates():
-        message = update.message
-        print(message.chat.id, message.text)
-    # update = bot.get_updates()[0]
-    # chat = update.message.chat
-    # bot.send_message(chat.id, 'hola')
+API_URL = "https://api.telegram.org"
+
+class TelegramBot(object):
+
+    def __init__(self, token, chat_id):
+        self.url = f"{API_URL}/bot{token}/sendMessage"
+        self.data = {'chat_id': chat_id}
+
+    def send_resource(self, resource):
+        self.data['text'] = resource.as_message
+        response = requests.post(self.url, data=self.data).json()
+        return response
     
-
-if __name__ == '__main__':
-    main()

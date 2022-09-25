@@ -16,8 +16,8 @@ class Resource(object):
     @property
     def as_message(self):
         return (
-            f'[{escape(self.name, version=2)}]\n\n'
-            f'{escape(self.fileurl, version=2)}\n\n'
-            f'`{escape(str(self.datetime), version=2)}`'
+            f'{self.name}\n\n'
+            f'{self.fileurl}\n\n'
+            f'{self.datetime}'
         )
 

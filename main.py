@@ -1,5 +1,5 @@
 import config
-import telegram
+from bot import TelegramBot
 from moodleapi import Moodle
 from csv import DictWriter
 from resource import Resource
@@ -7,7 +7,7 @@ import time
 
 api = Moodle(url=config.url, token=config.moodle_token)
 course = api.courses[0]
-bot = telegram.Bot(config.telegram_token)
+bot = TelegramBot(config.telegram_token, config.chat_id)
 
 ref_timemodified = 0
 new_timemodified = 0
@@ -19,11 +19,7 @@ while True:
     for resource in response['resources']:
         resource = Resource(resource)
         if resource.timemodified > ref_timemodified:
-            bot.send_message(
-                config.chat_id,
-                resource.as_message,
-                parse_mode='MarkdownV2'
-            )
+            bot.send_resource(resource)
             time.sleep(3)
             if resource.timemodified > new_timemodified:
                 new_timemodified = resource.timemodified
