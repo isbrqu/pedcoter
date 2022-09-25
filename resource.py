@@ -9,6 +9,7 @@ class Resource(object):
         self.name = resource.get('name')
         self.fileurl = resource.get('contentfiles')[0].get('fileurl')
         self.fileurl = self.fileurl.replace('https://', '')
+        self.fileurl = self.fileurl.replace('webservice/', '')
         self.timemodified = resource.get('timemodified')
         self.datetime = datetime.fromtimestamp(self.timemodified)
 
