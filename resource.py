@@ -1,7 +1,4 @@
 from datetime import datetime
-import telegram
-from telegram.utils.helpers import escape_markdown as escape
-
 
 class Resource(object):
 
