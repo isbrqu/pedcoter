@@ -40,18 +40,18 @@ class Moodle(object):
     def __getattr__(self, attr):
         env, sub = Moodle.resources_.get(attr, (None, None))
         if env and isinstance(sub, bool):
-            wsf = f'mod_{env}_get_{attr}_by_courses'
+            wsf = 'mod_' + env + '_get_' + attr + '_by_courses'
             value = self.call(wsf)[attr] if sub else self.call(wsf)
             setattr(self, attr, value)
             return value
         cname = self.__class__.__name__
-        raise AttributeError(f"'{cname}' object has no attribute '{attr}'")
+        raise AttributeError("'" + cname + "' object has no attribute '" + attr + "'")
 
     def __getattribute__(self, attr):
         env, sub = Moodle.resources_.get(attr, (None, None))
         value = super().__getattribute__(attr)
         if env and isinstance(sub, bool) and value == None:
-            wsf = f'mod_{env}_get_{attr}_by_courses'
+            wsf = 'mod_' + env + '_get_' + attr + '_by_courses'
             value = self.call(wsf)[attr] if sub else self.call(wsf)
             setattr(self, attr, value)
         return value
@@ -70,7 +70,7 @@ class Moodle(object):
                 if response.get('error'):
                     errorcode = response['errorcode']
                     errormsg = response['error']
-                    raise Exception(f'{errorcode}: {errormsg}')
+                    raise Exception(errorcode + ':' + errormsg)
                 self.__token = response['token']
                 self.__privatetoken = response['privatetoken']
             else:
@@ -83,11 +83,11 @@ class Moodle(object):
 
     @property
     def url_login(self):
-        return f'{self.url}/login/token.php'
+        return self.url + '/login/token.php'
 
     @property
     def url_server(self):
-        return f'{self.url}/webservice/rest/server.php'
+        return self.url + '/webservice/rest/server.php'
 
     def login(self, username, password):
         self.__clear_lazy_properties()

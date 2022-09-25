@@ -12,5 +12,5 @@ def level_to_one_aux(paramsin, key, paramsout):
         paramsout[key] = paramsin
     else:
         for index, value in enumerate_dict_and_list(paramsin):
-            level_to_one_aux(value, f'{key}[{index}]', paramsout)
+            level_to_one_aux(value, str(key) + '[' + str(index) + ']', paramsout)
 
