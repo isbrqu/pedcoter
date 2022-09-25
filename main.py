@@ -27,9 +27,8 @@ while True:
             time.sleep(3)
             if resource.timemodified > new_timemodified:
                 new_timemodified = resource.timemodified
-    time.sleep(5000)
+    time.sleep(config.timeout)
     if new_timemodified > ref_timemodified:
         ref_timemodified = new_timemodified
     i += 1
-    time.sleep(5)
 
